@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
+import emailjs from '@emailjs/browser';
 import { 
   CheckCircle2, 
   ArrowRight, 
@@ -130,40 +131,37 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
-  const onSubmit = async (data: any) => {
-    setIsSubmitting(true);
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: data.name,
-          phone: data.phone,
-          email: data.email,
-          kakaoId: data.kakaoId,
-          company: data.url, // Using URL as company/store info for now
-          message: data.message
-        }),
-      });
+ const onSubmit = async (data: any) => {
+  setIsSubmitting(true);
 
-      if (response.ok) {
-        setIsFormSubmitted(true);
-        setTimeout(() => {
-          setIsFormSubmitted(false);
-          reset();
-        }, 5000);
-      } else {
-        alert('상담 신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('네트워크 오류가 발생했습니다.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  try {
+    await emailjs.send(
+      "service_smxawz6",
+      "template_i4hpgsj",
+      {
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        kakaoId: data.kakaoId,
+        company: data.url,
+        message: data.message
+      },
+      "amN0mb4DIPFcvLGce"
+    );
+
+    setIsFormSubmitted(true);
+    setTimeout(() => {
+      setIsFormSubmitted(false);
+      reset();
+    }, 5000);
+
+  } catch (error) {
+    console.error("EmailJS Error:", error);
+    alert("메일 전송 중 오류가 발생했습니다.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   // Using the provided image as a logo
   const logoUrl = "https://ais-pre-w2re56ccvv4ll2hhotp6uo-104123986725.asia-northeast1.run.app/api/images/trueform-logo.png"; // Placeholder for the attached image logic if applicable, but I'll use a descriptive alt and a stylized div if I can't get the direct link easily. 
