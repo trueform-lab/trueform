@@ -5,7 +5,6 @@
 
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import emailjs from '@emailjs/browser';
 import { 
   CheckCircle2, 
   ArrowRight, 
@@ -135,20 +134,20 @@ export default function App() {
   setIsSubmitting(true);
 
   try {
-    await emailjs.send(
-      "service_smxawz6",
-      "template_i4hpgsj",
-      {
-        name: data.name,
-        phone: data.phone,
-        email: data.email,
-        kakaoId: data.kakaoId,
-        company: data.url,
-        message: data.message
-      },
-      "amN0mb4DIPFcvLGce"
-    );
-
+await fetch('/api/contact', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    name: data.name,
+    phone: data.phone,
+    email: data.email,
+    kakaoId: data.kakaoId,
+    company: data.url,
+    message: data.message
+  }),
+});
     setIsFormSubmitted(true);
     setTimeout(() => {
       setIsFormSubmitted(false);
