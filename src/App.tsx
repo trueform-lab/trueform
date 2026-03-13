@@ -103,16 +103,24 @@ export default function App() {
       fallbackThumb: "https://picsum.photos/seed/adulttoy-1/600/800",
       images: [
         "/images/portfolio3_01.png",
-        "/images/portfolio3_02.mp4",
+        "/images/portfolio3_02.gif",
         "/images/portfolio3_03.png",
         "/images/portfolio3_04.png",
-        "/images/portfolio3_05.png",
+        "/images/portfolio3_05.gif",
         "/images/portfolio3_06.png",
         "/images/portfolio3_07.png",
         "/images/portfolio3_08.png",
         "/images/portfolio3_09.png",
         "/images/portfolio3_10.png",
-        "/images/portfolio3_11.png"
+        "/images/portfolio3_11.png",
+        "/images/portfolio3_12.png",
+        "/images/portfolio3_13.png",
+        "/images/portfolio3_14.png",
+        "/images/portfolio3_15.gif",
+        "/images/portfolio3_16.png",
+        "/images/portfolio3_17.png",
+        "/images/portfolio3_18.png",
+        "/images/portfolio3_19.png"
       ]
     }
   ];
@@ -130,37 +138,40 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
- const onSubmit = async (data: any) => {
-  setIsSubmitting(true);
+  const onSubmit = async (data: any) => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          kakaoId: data.kakaoId,
+          company: data.url, // Using URL as company/store info for now
+          message: data.message
+        }),
+      });
 
-  try {
-await fetch('/api/contact', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    name: data.name,
-    phone: data.phone,
-    email: data.email,
-    kakaoId: data.kakaoId,
-    company: data.url,
-    message: data.message
-  }),
-});
-    setIsFormSubmitted(true);
-    setTimeout(() => {
-      setIsFormSubmitted(false);
-      reset();
-    }, 5000);
-
-  } catch (error) {
-    console.error("EmailJS Error:", error);
-    alert("메일 전송 중 오류가 발생했습니다.");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+      if (response.ok) {
+        setIsFormSubmitted(true);
+        setTimeout(() => {
+          setIsFormSubmitted(false);
+          reset();
+        }, 5000);
+      } else {
+        alert('상담 신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('네트워크 오류가 발생했습니다.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Using the provided image as a logo
   const logoUrl = "https://ais-pre-w2re56ccvv4ll2hhotp6uo-104123986725.asia-northeast1.run.app/api/images/trueform-logo.png"; // Placeholder for the attached image logic if applicable, but I'll use a descriptive alt and a stylized div if I can't get the direct link easily. 
@@ -174,18 +185,21 @@ await fetch('/api/contact', {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-lg border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+          >
             <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xs">T</span>
             </div>
-            <span className="font-bold text-xl tracking-tight font-display">트루폼</span>
-          </div>
+            <span className="font-bold text-xl tracking-tight font-display text-slate-900">트루폼</span>
+          </button>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
             <a href="#problem" className="hover:text-indigo-600 transition-colors">고민</a>
             <a href="#solution" className="hover:text-indigo-600 transition-colors">해결책</a>
             <a href="#process" className="hover:text-indigo-600 transition-colors">프로세스</a>
             <a href="#portfolio" className="hover:text-indigo-600 transition-colors">포트폴리오</a>
-            <a href="#contact" className="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-sm shadow-indigo-200">상담하기</a>
+            <a href="#pricing" className="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-sm shadow-indigo-200">제작 문의</a>
           </div>
         </div>
       </nav>
@@ -213,8 +227,8 @@ await fetch('/api/contact', {
               이탈률은 낮추고 구매 버튼 클릭은 높이는 데이터 기반 상세페이지.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#contact" className="inline-flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition-all group">
-                무료 상담 신청하기
+              <a href="#pricing" className="inline-flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition-all group">
+                제작 비용 확인하기
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
               <a href="#portfolio" className="inline-flex items-center justify-center gap-2 bg-white border border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition-all">
@@ -420,7 +434,7 @@ await fetch('/api/contact', {
               <h2 className="text-3xl md:text-4xl font-bold mb-4 font-display">이미 증명된 결과물들</h2>
               <p className="text-slate-500">트루폼과 함께한 사장님들의 실제 상세페이지 예시입니다.</p>
             </div>
-            <a href="#contact" className="text-indigo-600 font-bold flex items-center gap-1 hover:underline">
+            <a href="#pricing" className="text-indigo-600 font-bold flex items-center gap-1 hover:underline">
               전체 포트폴리오 요청하기 <ChevronRight className="w-4 h-4" />
             </a>
           </div>
@@ -571,179 +585,257 @@ await fetch('/api/contact', {
         </div>
       )}
 
-      {/* 7. Service Info */}
-      <section className="section-padding bg-indigo-50/30">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl shadow-indigo-900/5 border border-indigo-100">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold mb-4 font-display">올인원 상세페이지 패키지</h2>
-              <p className="text-slate-500">초보 사장님께 꼭 필요한 것만 담았습니다.</p>
-            </div>
-            <div className="space-y-6 mb-10">
-              {[
-                "트루폼 AI 기반 전환 구조 설계",
-                "타겟 맞춤형 카피라이팅 재정리",
-                "고화질 이미지 보정 및 합성",
-                "모바일 최적화 레이아웃",
-                "무료 수정 1회 포함"
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4">
-                  <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+      {/* 7. Pricing & CTA Section (New Design) */}
+      <section id="pricing" className="relative bg-slate-50 text-slate-900 py-20 overflow-hidden font-sans">
+        {/* Background gradients */}
+        <div className="absolute inset-0 pointer-events-none z-0" style={{
+          background: `radial-gradient(ellipse 80% 40% at 50% -10%, rgba(79,70,229,0.08) 0%, transparent 70%), radial-gradient(ellipse 60% 30% at 90% 110%, rgba(79,70,229,0.05) 0%, transparent 60%)`
+        }} />
+
+        <div className="max-w-[700px] mx-auto px-5 relative z-10">
+          {/* Header */}
+          <header className="text-center pt-10 pb-11">
+            <motion.div 
+              initial={{ opacity: 0, y: -14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="font-display font-bold text-[clamp(34px,8vw,50px)] text-slate-900 leading-[1.1] mb-[14px]">
+                제작 비용 <em className="not-italic text-indigo-600">안내</em>
+              </h2>
+              <p className="text-[14.5px] text-slate-600 leading-[1.8]">
+                팔리는 상세페이지, 합리적인 가격으로 시작하세요<br />
+                모든 플랜에 빠른 소통과 꼼꼼한 수정이 포함됩니다
+              </p>
+            </motion.div>
+          </header>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-7">
+            <div className="flex-1 h-px bg-slate-200" />
+            <span className="text-[14px] text-slate-400">✦</span>
+            <div className="flex-1 h-px bg-slate-200" />
+          </div>
+
+          {/* Pricing Grid */}
+          <div className="flex flex-col gap-[14px] mb-[28px]">
+            {/* Basic */}
+            <motion.div 
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="bg-white border-[1.5px] border-slate-200 rounded-[20px] p-[26px] md:p-[28px] relative overflow-hidden transition-all hover:-translate-y-[3px] hover:shadow-[0_14px_40px_rgba(79,70,229,0.08)] group"
+            >
+              <div className="absolute top-0 left-0 right-0 h-[3px] bg-slate-200" />
+              <div className="flex flex-wrap md:flex-nowrap items-start justify-between mb-4 gap-2.5">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-[17px] font-bold text-slate-900 mb-[3px]">베이직</div>
+                    <div className="text-[12px] text-slate-500">처음 시작하는 분께 추천</div>
                   </div>
-                  <span className="text-slate-700 font-medium">{item}</span>
+                </div>
+                <div className="text-left md:text-right w-full md:w-auto mt-2 md:mt-0">
+                  <span className="text-[11.5px] text-slate-400 line-through block mb-[2px]">&nbsp;</span>
+                  <div className="font-display font-bold text-[26px] text-slate-900 leading-none">
+                    10<span className="text-[13px] text-slate-500 font-normal">만원~</span>
+                  </div>
+                </div>
+              </div>
+              <ul className="flex flex-col gap-2 pt-4 border-t border-slate-100">
+                {[
+                  "상세페이지 1종 제작",
+                  "스마트스토어 · 쿠팡 · 카카오쇼핑 최적화",
+                  "무료 수정 1회 포함",
+                  "납기 5~7일"
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-center gap-[9px] text-[13.5px] text-slate-700">
+                    <div className="w-[18px] h-[18px] rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-[10px] font-bold shrink-0">✓</div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Standard */}
+            <motion.div 
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+              className="bg-gradient-to-br from-white to-indigo-50/50 border-[1.5px] border-indigo-600 rounded-[20px] p-[26px] md:p-[28px] relative overflow-hidden transition-all hover:-translate-y-[3px] hover:shadow-[0_14px_40px_rgba(79,70,229,0.15)] group"
+            >
+              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-800 to-indigo-500" />
+              <div className="absolute top-[14px] right-[16px] text-[11px] font-bold px-[11px] py-[4px] rounded-full tracking-[0.04em] bg-indigo-600 text-white">인기</div>
+              <div className="flex flex-wrap md:flex-nowrap items-start justify-between mb-4 gap-2.5">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-[17px] font-bold text-slate-900 mb-[3px]">스탠다드</div>
+                    <div className="text-[12px] text-slate-500">가장 많이 선택하는 플랜</div>
+                  </div>
+                </div>
+                <div className="text-left md:text-right w-full md:w-auto mt-2 md:mt-0">
+                  <span className="text-[11.5px] text-slate-400 line-through block mb-[2px]">&nbsp;</span>
+                  <div className="font-display font-bold text-[26px] text-indigo-600 leading-none">
+                    15<span className="text-[13px] text-slate-500 font-normal">만원~</span>
+                  </div>
+                </div>
+              </div>
+              <ul className="flex flex-col gap-2 pt-4 border-t border-indigo-100">
+                {[
+                  "상세페이지 1종 + 썸네일 이미지 포함",
+                  "전 플랫폼 최적화 (자사몰 포함)",
+                  "무료 수정 2회 포함",
+                  "납기 5~7일",
+                  "트렌드 분석 반영 디자인"
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-center gap-[9px] text-[13.5px] text-slate-700">
+                    <div className="w-[18px] h-[18px] rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-bold shrink-0">✓</div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* All-in-one */}
+            <motion.div 
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              className="bg-gradient-to-br from-white to-amber-50/50 border-[1.5px] border-amber-500 rounded-[20px] p-[26px] md:p-[28px] relative overflow-hidden transition-all hover:-translate-y-[3px] hover:shadow-[0_14px_40px_rgba(245,158,11,0.15)] group"
+            >
+              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-amber-600 to-amber-400" />
+              <div className="absolute top-[14px] right-[16px] text-[11px] font-bold px-[11px] py-[4px] rounded-full tracking-[0.04em] bg-amber-500 text-white">풀패키지</div>
+              <div className="flex flex-wrap md:flex-nowrap items-start justify-between mb-4 gap-2.5">
+                <div className="flex items-center">
+                  <div>
+                    <div className="text-[17px] font-bold text-slate-900 mb-[3px]">올인원 패키지</div>
+                    <div className="text-[12px] text-slate-500">초보 사장님께 꼭 필요한 것만 담았습니다</div>
+                  </div>
+                </div>
+                <div className="text-left md:text-right w-full md:w-auto mt-4 md:mt-0">
+                  <span className="text-[11.5px] text-slate-400 line-through block mb-[2px]">&nbsp;</span>
+                  <div className="font-display font-bold text-[26px] text-amber-500 leading-none flex items-baseline gap-2 justify-start md:justify-end">
+                    <span className="text-[14px] text-slate-400 line-through font-normal">정가 55만원</span>
+                    <span>33<span className="text-[13px] text-slate-500 font-normal">만원</span></span>
+                  </div>
+                </div>
+              </div>
+              <ul className="flex flex-col gap-2 pt-4 border-t border-amber-100">
+                {[
+                  "트루폼 AI 기반 전환 구조 설계",
+                  "타겟 맞춤형 카피라이팅 재정리",
+                  "고화질 이미지 보정 및 합성",
+                  "모바일 최적화 레이아웃",
+                  "무료 수정 3회 포함"
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-center gap-[9px] text-[13.5px] text-slate-700">
+                    <div className="w-[18px] h-[18px] rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-[10px] font-bold shrink-0">✓</div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
+
+          {/* Add-ons */}
+          <motion.div 
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.55 }}
+            className="bg-slate-100/50 border border-slate-200 rounded-[18px] p-[22px] md:p-[26px] mb-[20px]"
+          >
+            <div className="text-[13.5px] font-bold text-indigo-600 mb-[14px] flex items-center gap-[7px]">추가 옵션</div>
+            <div className="flex flex-col gap-[10px]">
+              {[
+                { label: "썸네일 추가 제작 (1종)", price: "+2만원~" },
+                { label: "빠른 납기 (3일 이내)", price: "+3만원~" },
+                { label: "기존 페이지 리뉴얼", price: "별도 협의" },
+                { label: "2종 이상 패키지", price: "10% 할인" }
+              ].map((addon, i) => (
+                <div key={i} className="flex justify-between items-center text-[13.5px]">
+                  <div className="text-slate-700 flex items-center gap-[7px]">{addon.label}</div>
+                  <div className="bg-white border border-slate-200 text-indigo-600 text-[12.5px] font-bold px-[11px] py-[3px] rounded-full">{addon.price}</div>
                 </div>
               ))}
             </div>
-            <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div>
-                <span className="text-sm text-slate-400 line-through block">정가 550,000원</span>
-                <span className="text-3xl font-bold text-slate-900 font-display">330,000원 <span className="text-sm font-normal text-slate-500 font-sans">(VAT 별도)</span></span>
-              </div>
-              <a href="#contact" className="w-full md:w-auto bg-indigo-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-indigo-700 transition-all text-center">
-                지금 바로 시작하기
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+          </motion.div>
 
-      {/* 8. Consultation Form (CTA) */}
-      <section id="contact" className="section-padding bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-display">고민은 매출만 늦출 뿐입니다.</h2>
-              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+          {/* Notice */}
+          <motion.div 
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.65 }}
+            className="bg-white border border-slate-200 rounded-2xl p-[20px] md:p-[24px] mb-[20px]"
+          >
+            <div className="text-[13.5px] font-bold text-indigo-600 mb-[10px] flex items-center gap-[7px]">안내사항</div>
+            <ul className="flex flex-col gap-[7px]">
+              {[
+                "상품 정보 및 이미지는 고객님께서 제공해 주셔야 합니다",
+                "상품 카테고리·복잡도에 따라 금액이 달라질 수 있습니다",
+                "결제는 착수금 50% + 완료 후 잔금 50% 방식입니다",
+                "수정 횟수 초과 시 건당 1만원 추가됩니다"
+              ].map((notice, i) => (
+                <li key={i} className="text-[12.5px] text-slate-500 pl-[14px] relative leading-[1.6]">
+                  <span className="absolute left-0 text-indigo-500 font-bold">·</span>
+                  {notice}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div 
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.75 }}
+            className="max-w-2xl mx-auto pt-[40px] pb-[56px]"
+          >
+            <div className="text-left mb-10">
+              <h3 className="text-3xl md:text-4xl font-bold font-display text-slate-900 mb-4 tracking-tight">고민은 매출만 늦출 뿐입니다.</h3>
+              <p className="text-slate-600 mb-8 leading-relaxed text-[15px]">
                 우리 제품에 맞는 구조가 무엇인지 궁금하신가요?<br />
                 트루폼이 무료로 첫 진단을 도와드립니다.
               </p>
-              <div className="space-y-6">
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50">
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+              
+              <div className="flex flex-col gap-4">
+                <div className="bg-white border border-slate-100 rounded-2xl p-5 flex gap-4 items-center shadow-sm">
+                  <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center shrink-0">
                     <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
                   </div>
                   <div>
-                    <p className="font-bold text-sm">평균 만족도 4.9/5.0</p>
-                    <p className="text-xs text-slate-500">100명 이상의 사장님이 선택했습니다.</p>
+                    <div className="font-bold text-slate-900 text-[14px] mb-1">평균 만족도 4.9/5.0</div>
+                    <div className="text-[13px] text-slate-500">100명 이상의 사장님이 선택했습니다.</div>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50">
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
-                    <RefreshCw className="w-5 h-5 text-blue-500" />
+                
+                <div className="bg-white border border-slate-100 rounded-2xl p-5 flex gap-4 items-center shadow-sm">
+                  <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center shrink-0">
+                    <RefreshCw className="w-5 h-5 text-indigo-600" />
                   </div>
                   <div>
-                    <p className="font-bold text-sm">빠른 피드백</p>
-                    <p className="text-xs text-slate-500">문의 후 24시간 이내에 답변드립니다.</p>
+                    <div className="font-bold text-slate-900 text-[14px] mb-1">빠른 피드백</div>
+                    <div className="text-[13px] text-slate-500">문의 후 24시간 이내에 답변드립니다.</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-2xl shadow-slate-200/50">
-              {isFormSubmitted ? (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="h-full flex flex-col items-center justify-center text-center py-12"
-                >
-                  <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
-                    <CheckCircle2 className="w-8 h-8 text-indigo-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2 font-display">신청이 완료되었습니다!</h3>
-                  <p className="text-slate-500">담당자가 확인 후 빠르게 연락드리겠습니다.</p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">성함 / 업체명</label>
-                    <input 
-                      {...register("name", { required: true })}
-                      placeholder="홍길동 / 트루폼스토어" 
-                      className={cn(
-                        "w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all",
-                        errors.name && "border-red-500"
-                      )}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">연락처</label>
-                    <input 
-                      {...register("phone", { required: true })}
-                      placeholder="010-0000-0000" 
-                      className={cn(
-                        "w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all",
-                        errors.phone && "border-red-500"
-                      )}
-                    />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-2">이메일 주소</label>
-                      <input 
-                        {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
-                        placeholder="example@gmail.com" 
-                        className={cn(
-                          "w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all",
-                          errors.email && "border-red-500"
-                        )}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-2">카카오톡 ID (선택)</label>
-                      <input 
-                        {...register("kakaoId")}
-                        placeholder="카카오톡 아이디" 
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">스토어 URL (선택)</label>
-                    <input 
-                      {...register("url")}
-                      placeholder="https://smartstore.naver.com/..." 
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">문의 내용</label>
-                    <textarea 
-                      {...register("message", { required: true })}
-                      placeholder="제작하고 싶은 제품이나 현재 고민을 적어주세요." 
-                      rows={4}
-                      className={cn(
-                        "w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all resize-none",
-                        errors.message && "border-red-500"
-                      )}
-                    />
-                  </div>
-                  <button 
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={cn(
-                      "w-full bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg shadow-slate-200 flex items-center justify-center gap-2",
-                      isSubmitting && "opacity-70 cursor-not-allowed"
-                    )}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        신청 중...
-                      </>
-                    ) : (
-                      "무료 진단 및 상담 신청하기"
-                    )}
-                  </button>
-                  <p className="text-[10px] text-center text-slate-400">
-                    개인정보는 상담 목적으로만 사용되며 안전하게 보호됩니다.
-                  </p>
-                </form>
-              )}
+            <div className="text-center">
+              <a href="https://litt.ly/jjangaya33" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-[8px] bg-indigo-600 text-white px-[38px] py-[16px] rounded-full text-[15px] font-bold tracking-[0.02em] transition-all hover:-translate-y-[2px] hover:bg-indigo-700 hover:shadow-[0_8px_32px_rgba(79,70,229,0.38)] shadow-[0_4px_24px_rgba(79,70,229,0.28)] w-full sm:w-auto">
+                지금 바로 제작 문의하기
+              </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
+
+
 
       {/* Footer */}
       <footer className="bg-slate-50 border-t border-slate-100 py-12 px-6">
@@ -752,7 +844,7 @@ await fetch('/api/contact', {
             <div className="w-6 h-6 bg-indigo-600 rounded flex items-center justify-center">
               <TrendingUp className="text-white w-4 h-4" />
             </div>
-            <span className="font-bold text-lg tracking-tight font-display">트루폼</span>
+            <span className="font-bold text-lg tracking-tight font-display text-slate-900">트루폼</span>
           </div>
           <div className="text-sm text-slate-400">
             © 2024 Trueform Studio. All rights reserved.
