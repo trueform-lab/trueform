@@ -65,15 +65,15 @@ export default function App() {
     },
     {
       id: 2,
-      title: "소상공업 린넨업체 Y사",
+      title: "농수산물 C업체",
       desc: "구매 전환율 14% 상승",
       thumbnail: "/images/portfolio2_01.png",
       fallbackThumb: "https://picsum.photos/seed/portfolio-v-2/600/1500",
       images: [
         "/images/portfolio2_01.png",
-        "/images/portfolio2_02.gif",
+        "/images/portfolio2_02.png",
         "/images/portfolio2_03.png",
-        "/images/portfolio2_04.png",
+        "/images/portfolio2_04.gif",
         "/images/portfolio2_05.png",
         "/images/portfolio2_06.png",
         "/images/portfolio2_07.png",
@@ -85,19 +85,12 @@ export default function App() {
         "/images/portfolio2_13.png",
         "/images/portfolio2_14.png",
         "/images/portfolio2_15.png",
-        "/images/portfolio2_16.png",
-        "/images/portfolio2_17.png",
-        "/images/portfolio2_18.png",
-        "/images/portfolio2_19.png",
-        "/images/portfolio2_20.png",
-        "/images/portfolio2_21.png",
-        "/images/portfolio2_22.png",
-        "/images/portfolio2_23.png"
+        "/images/portfolio2_20.png"
       ]
     },
     {
       id: 3,
-      title: "어덜트 토이샾 S사",
+      title: "화장품 C사",
       desc: "구매 전환율 21% 상승",
       thumbnail: "/images/portfolio3_01.png",
       fallbackThumb: "https://picsum.photos/seed/adulttoy-1/600/800",
@@ -194,12 +187,20 @@ export default function App() {
             </div>
             <span className="font-bold text-xl tracking-tight font-display text-slate-900">트루폼</span>
           </button>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-            <a href="#problem" className="hover:text-indigo-600 transition-colors">고민</a>
-            <a href="#solution" className="hover:text-indigo-600 transition-colors">해결책</a>
-            <a href="#process" className="hover:text-indigo-600 transition-colors">프로세스</a>
-            <a href="#portfolio" className="hover:text-indigo-600 transition-colors">포트폴리오</a>
-            <a href="#pricing" className="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition-all shadow-sm shadow-indigo-200">제작 문의</a>
+          <div className="flex items-center gap-4 md:gap-8">
+            <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+              <a href="#problem" className="hover:text-indigo-600 transition-colors">고민</a>
+              <a href="#solution" className="hover:text-indigo-600 transition-colors">해결책</a>
+              <a href="#process" className="hover:text-indigo-600 transition-colors">프로세스</a>
+            </div>
+            <div className="flex items-center gap-2 md:gap-3">
+              <a href="#portfolio" className="bg-indigo-600 text-white px-3 py-1.5 md:px-4 md:py-1.5 text-xs md:text-sm rounded-full hover:bg-indigo-700 transition-all shadow-sm shadow-indigo-200 font-medium">
+                포트폴리오
+              </a>
+              <a href="#pricing" className="bg-indigo-600 text-white px-3 py-1.5 md:px-4 md:py-1.5 text-xs md:text-sm rounded-full hover:bg-indigo-700 transition-all shadow-sm shadow-indigo-200 font-medium">
+                가격 문의
+              </a>
+            </div>
           </div>
         </div>
       </nav>
@@ -427,87 +428,116 @@ export default function App() {
       </section>
 
       {/* 6. Portfolio Section */}
-      <section id="portfolio" className="section-padding bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+      <section id="portfolio" className="py-24 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-4">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-display">이미 증명된 결과물들</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-display text-slate-900">이미 증명된 결과물들</h2>
               <p className="text-slate-500">트루폼과 함께한 사장님들의 실제 상세페이지 예시입니다.</p>
             </div>
             <a href="#pricing" className="text-indigo-600 font-bold flex items-center gap-1 hover:underline">
               전체 포트폴리오 요청하기 <ChevronRight className="w-4 h-4" />
             </a>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+          
+          <div className="flex flex-col gap-32">
             {portfolioItems.map((item) => (
               <motion.div 
                 key={item.id} 
-                className="group cursor-pointer flex flex-col items-center" 
-                onClick={() => setSelectedPortfolio(item.id)}
-                whileHover={{ y: -12 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="relative w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7 }}
               >
-                {/* Smartphone Frame - Scaled to 70% of column width with thinner borders */}
-                <div className="relative w-[70%] aspect-[9/19] bg-slate-950 rounded-[2.5rem] p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-[3px] border-slate-800 overflow-hidden mb-8">
-                  {/* Speaker/Notch Area - Smaller and more subtle */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-4 bg-slate-950 rounded-b-xl z-30 flex items-center justify-center">
-                    <div className="w-6 h-0.5 bg-slate-800 rounded-full" />
+                {/* Background Circle */}
+                <div className="absolute right-0 md:right-[-5%] top-1/2 -translate-y-1/2 w-[120%] md:w-[65%] aspect-square bg-indigo-50/60 rounded-full z-0" />
+                
+                {/* Left Content */}
+                <div className="w-full md:w-[40%] relative z-10 flex flex-col items-center md:items-start pl-0 md:pl-8 mb-16 md:mb-0">
+                  <div className="mb-12 text-center md:text-left">
+                    <div className="border-l-4 border-indigo-600 pl-5 py-1">
+                      <h4 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">{item.title}</h4>
+                      <p className="text-indigo-600 font-medium">{item.desc}</p>
+                    </div>
                   </div>
                   
-                  {/* Screen Content */}
-                  <div className="w-full h-full rounded-[2.2rem] overflow-hidden relative bg-white">
-                    <div className="flex flex-col w-full transition-transform duration-1000 ease-out group-hover:scale-105 origin-top">
-                      {item.images.slice(0, 3).map((img, idx) => {
-                        const isVideo = img.toLowerCase().endsWith('.mp4');
-                        if (isVideo) {
-                          return (
-                            <video
-                              key={idx}
-                              src={img}
-                              autoPlay
-                              muted
-                              loop
-                              playsInline
-                              className="w-full h-auto block"
-                            />
-                          );
-                        }
-                        return (
-                          <img 
-                            key={idx}
-                            src={img} 
-                            alt={`${item.title} ${idx}`} 
-                            className="w-full h-auto block"
-                            referrerPolicy="no-referrer"
-                            onError={(e) => {
-                              if (idx === 0) e.currentTarget.src = item.fallbackThumb;
-                              else e.currentTarget.style.display = 'none';
-                            }}
-                          />
-                        );
-                      })}
+                  {/* Phone Mockup */}
+                  <div 
+                    className="relative w-[240px] aspect-[9/19] bg-slate-900 rounded-[2.5rem] p-1.5 shadow-[20px_20px_40px_rgba(0,0,0,0.3)] border-[2px] border-slate-700 overflow-hidden z-20 md:ml-8 transform md:-rotate-2 cursor-pointer group"
+                    onClick={() => setSelectedPortfolio(item.id)}
+                  >
+                    {/* Notch */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-4 bg-slate-900 rounded-b-xl z-30 flex items-center justify-center">
+                      <div className="w-6 h-0.5 bg-slate-800 rounded-full" />
                     </div>
-                    
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-[3px] z-20">
-                      <motion.span 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileHover={{ scale: 1.1 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="bg-white text-slate-900 px-6 py-3 rounded-full font-bold text-xs shadow-2xl whitespace-nowrap"
-                      >
-                        자세히 보기
-                      </motion.span>
+                    {/* Screen */}
+                    <div className="w-full h-full rounded-[2.2rem] overflow-hidden relative bg-white">
+                      <div className="flex flex-col w-full h-full overflow-y-auto scrollbar-hide">
+                        {item.images.length > 0 ? (
+                          item.images.slice(0, 4).map((img, idx) => {
+                            const isVideo = img.toLowerCase().endsWith('.mp4');
+                            if (isVideo) {
+                              return (
+                                <video key={idx} src={img} autoPlay muted loop playsInline className="w-full h-auto block" />
+                              );
+                            }
+                            return (
+                              <img key={idx} src={img} alt="" className="w-full h-auto block" />
+                            );
+                          })
+                        ) : (
+                          <img src={item.fallbackThumb} alt="준비 중" className="w-full h-full object-cover block" />
+                        )}
+                      </div>
+                      
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-[3px] z-20 pointer-events-none">
+                        <span className="bg-white text-slate-900 px-6 py-3 rounded-full font-bold text-xs shadow-2xl whitespace-nowrap">
+                          자세히 보기
+                        </span>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Home Indicator */}
-                  <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-16 h-0.5 bg-slate-800/10 rounded-full z-30" />
                 </div>
-
-                <div className="text-center">
-                  <h4 className="font-bold text-xl mb-2 text-slate-900 font-display">{item.title}</h4>
-                  <p className="text-sm font-medium text-indigo-600 bg-indigo-50 inline-block px-4 py-1.5 rounded-full border border-indigo-100">{item.desc}</p>
+                
+                {/* Right Content: Two Strips */}
+                <div 
+                  className="w-full md:w-[60%] relative z-10 flex justify-center md:justify-end pr-0 md:pr-12 gap-4 h-[500px] md:h-[700px] cursor-pointer"
+                  onClick={() => setSelectedPortfolio(item.id)}
+                >
+                  {/* Strip 1 */}
+                  <div className="w-[45%] max-w-[280px] h-full overflow-hidden shadow-2xl bg-white rounded-sm transform translate-y-8">
+                    <div className="flex flex-col w-full h-full overflow-y-auto scrollbar-hide">
+                      {item.images.length > 0 ? (
+                        item.images.filter((_, i) => i % 2 === 0).map((img, idx) => {
+                          const isVideo = img.toLowerCase().endsWith('.mp4');
+                          if (isVideo) {
+                            return <video key={idx} src={img} autoPlay muted loop playsInline className="w-full h-auto block" />;
+                          }
+                          return <img key={idx} src={img} alt="" className="w-full h-auto block" />;
+                        })
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-slate-50 text-slate-400 text-sm">이미지 준비 중</div>
+                      )}
+                    </div>
+                  </div>
+                  {/* Strip 2 */}
+                  <div className="w-[45%] max-w-[280px] h-full overflow-hidden shadow-2xl bg-white rounded-sm transform -translate-y-8">
+                    <div className="flex flex-col w-full h-full overflow-y-auto scrollbar-hide">
+                      {item.images.length > 0 ? (
+                        item.images.filter((_, i) => i % 2 === 1).map((img, idx) => {
+                          const isVideo = img.toLowerCase().endsWith('.mp4');
+                          if (isVideo) {
+                            return <video key={idx} src={img} autoPlay muted loop playsInline className="w-full h-auto block" />;
+                          }
+                          return <img key={idx} src={img} alt="" className="w-full h-auto block" />;
+                        })
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-slate-50 text-slate-400 text-sm">이미지 준비 중</div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -544,41 +574,46 @@ export default function App() {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50">
-              <div className="max-w-2xl mx-auto space-y-0 shadow-2xl">
-                {portfolioItems.find(p => p.id === selectedPortfolio)?.images.map((img, idx) => {
-                  const isVideo = img.toLowerCase().endsWith('.mp4');
-                  if (isVideo) {
+              <div className="max-w-2xl mx-auto space-y-0 shadow-2xl bg-white min-h-[400px] flex flex-col">
+                {portfolioItems.find(p => p.id === selectedPortfolio)?.images.length ? (
+                  portfolioItems.find(p => p.id === selectedPortfolio)?.images.map((img, idx) => {
+                    const isVideo = img.toLowerCase().endsWith('.mp4');
+                    if (isVideo) {
+                      return (
+                        <video
+                          key={idx}
+                          src={img}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          controls
+                          className="w-full h-auto block"
+                        />
+                      );
+                    }
                     return (
-                      <video
+                      <img 
                         key={idx}
-                        src={img}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        controls
+                        src={img} 
+                        alt={`Detail ${idx + 1}`} 
                         className="w-full h-auto block"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          if (selectedPortfolio === 1) {
+                            e.currentTarget.src = `https://picsum.photos/seed/detail-${idx}/800/1200`;
+                          } else {
+                            e.currentTarget.style.display = 'none';
+                          }
+                        }}
                       />
                     );
-                  }
-                  return (
-                    <img 
-                      key={idx}
-                      src={img} 
-                      alt={`Detail ${idx + 1}`} 
-                      className="w-full h-auto block"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        // If it's the N사 item and images are missing, show placeholders
-                        if (selectedPortfolio === 1) {
-                          e.currentTarget.src = `https://picsum.photos/seed/detail-${idx}/800/1200`;
-                        } else {
-                          e.currentTarget.style.display = 'none';
-                        }
-                      }}
-                    />
-                  );
-                })}
+                  })
+                ) : (
+                  <div className="flex-1 flex items-center justify-center text-slate-400 p-12">
+                    <p>상세 이미지가 준비 중입니다.</p>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
