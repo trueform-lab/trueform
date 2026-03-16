@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { 
   CheckCircle2, 
@@ -27,6 +27,29 @@ import { twMerge } from 'tailwind-merge';
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+const StaticGif = ({ src, className }: { src: string, className?: string }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = src;
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+        }
+      }
+    };
+  }, [src]);
+
+  return <canvas ref={canvasRef} className={className} />;
+};
 
 export default function App() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
@@ -475,15 +498,36 @@ export default function App() {
                     <div className="w-full h-full rounded-[2.2rem] overflow-hidden relative bg-white">
                       <div className="flex flex-col w-full h-full overflow-y-auto scrollbar-hide">
                         {item.images.length > 0 ? (
-                          item.images.slice(0, 4).map((img, idx) => {
+                          item.images.map((img, idx) => {
                             const isVideo = img.toLowerCase().endsWith('.mp4');
-                            if (isVideo) {
-                              return (
-                                <video key={idx} src={img} autoPlay muted loop playsInline className="w-full h-auto block" />
-                              );
+                            const isGif = img.toLowerCase().endsWith('.gif');
+                            
+                            // First image is the hero, subsequent ones are static if GIF
+                            if (idx === 0) {
+                              if (isVideo) {
+                                return <video key={idx} src={img} autoPlay muted loop playsInline className="w-full h-auto object-top block" />;
+                              }
+                              return <img key={idx} src={img} alt="" className="w-full h-auto object-top block" />;
                             }
+                            
+                            // Subsequent images
+                            if (isVideo) {
+                              return <video key={idx} src={img} autoPlay muted loop playsInline className="w-full h-auto block" />;
+                            }
+                            
                             return (
-                              <img key={idx} src={img} alt="" className="w-full h-auto block" />
+                              <div key={idx} className="relative">
+                                {isGif ? (
+                                  <StaticGif src={img} className="w-full h-auto block" />
+                                ) : (
+                                  <img src={img} alt="" className="w-full h-auto block" />
+                                )}
+                                {isGif && (
+                                  <div className="absolute top-3 right-3 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md backdrop-blur-md z-10 shadow-lg">
+                                    GIF
+                                  </div>
+                                )}
+                              </div>
                             );
                           })
                         ) : (
