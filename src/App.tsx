@@ -906,7 +906,7 @@ export default function App() {
             </div>
 
             <div className="text-center">
-              <a href="https://litt.ly/jjangaya33" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-[8px] bg-indigo-600 text-white px-[38px] py-[16px] rounded-full text-[15px] font-bold tracking-[0.02em] transition-all hover:-translate-y-[2px] hover:bg-indigo-700 hover:shadow-[0_8px_32px_rgba(79,70,229,0.38)] shadow-[0_4px_24px_rgba(79,70,229,0.28)] w-full sm:w-auto">
+              <a href="https://open.kakao.com/o/shICCEli" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-[8px] bg-indigo-600 text-white px-[38px] py-[16px] rounded-full text-[15px] font-bold tracking-[0.02em] transition-all hover:-translate-y-[2px] hover:bg-indigo-700 hover:shadow-[0_8px_32px_rgba(79,70,229,0.38)] shadow-[0_4px_24px_rgba(79,70,229,0.28)] w-full sm:w-auto">
                 지금 바로 제작 문의하기
               </a>
             </div>
