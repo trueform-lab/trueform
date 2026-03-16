@@ -496,21 +496,12 @@ export default function App() {
                     </div>
                     {/* Screen */}
                     <div className="w-full h-full rounded-[2.2rem] overflow-hidden relative bg-white">
-                      <div className="flex flex-col w-full h-full overflow-y-auto scrollbar-hide">
+                      <div className="flex flex-col w-full h-full overflow-hidden">
                         {item.images.length > 0 ? (
                           item.images.map((img, idx) => {
                             const isVideo = img.toLowerCase().endsWith('.mp4');
                             const isGif = img.toLowerCase().endsWith('.gif');
                             
-                            // First image is the hero, subsequent ones are static if GIF
-                            if (idx === 0) {
-                              if (isVideo) {
-                                return <video key={idx} src={img} autoPlay muted loop playsInline className="w-full h-auto object-top block" />;
-                              }
-                              return <img key={idx} src={img} alt="" className="w-full h-auto object-top block" />;
-                            }
-                            
-                            // Subsequent images
                             if (isVideo) {
                               return <video key={idx} src={img} autoPlay muted loop playsInline className="w-full h-auto block" />;
                             }
