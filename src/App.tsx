@@ -70,11 +70,11 @@ export default function App() {
         "/images/portfolio1_02.gif",
         "/images/portfolio1_03.png",
         "/images/portfolio1_04.png",
-        "/images/portfolio1_05.gif",
+        "/images/portfolio1_05.png",
         "/images/portfolio1_06.png",
         "/images/portfolio1_07.png",
         "/images/portfolio1_08.png",
-        "/images/portfolio1_09.png",
+        "/images/portfolio1_09.gif",
         "/images/portfolio1_10.png",
         "/images/portfolio1_11.png",
         "/images/portfolio1_12.png",
@@ -690,35 +690,37 @@ export default function App() {
 
           {/* Pricing Grid */}
           <div className="flex flex-col gap-[14px] mb-[28px]">
-            {/* Basic */}
+            {/* Standard */}
             <motion.div 
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.15 }}
-              className="bg-white border-[1.5px] border-slate-200 rounded-[20px] p-[26px] md:p-[28px] relative overflow-hidden transition-all hover:-translate-y-[3px] hover:shadow-[0_14px_40px_rgba(79,70,229,0.08)] group"
+              className="bg-white border-[1.5px] border-slate-200 rounded-[20px] p-[26px] md:p-[28px] relative overflow-hidden transition-all hover:-translate-y-[3px] hover:shadow-[0_14px_40px_rgba(0,0,0,0.08)] group"
             >
               <div className="absolute top-0 left-0 right-0 h-[3px] bg-slate-200" />
               <div className="flex flex-wrap md:flex-nowrap items-start justify-between mb-4 gap-2.5">
                 <div className="flex items-center">
                   <div>
-                    <div className="text-[17px] font-bold text-slate-900 mb-[3px]">베이직</div>
-                    <div className="text-[12px] text-slate-500">처음 시작하는 분께 추천</div>
+                    <div className="text-[17px] font-bold text-slate-900 mb-[3px]">스탠다드</div>
+                    <div className="text-[12px] text-slate-500">식품/라이프 스타일 배너 제작</div>
                   </div>
                 </div>
                 <div className="text-left md:text-right w-full md:w-auto mt-2 md:mt-0">
                   <span className="text-[11.5px] text-slate-400 line-through block mb-[2px]">&nbsp;</span>
                   <div className="font-display font-bold text-[26px] text-slate-900 leading-none">
-                    10<span className="text-[13px] text-slate-500 font-normal">만원~</span>
+                    19,000<span className="text-[13px] text-slate-500 font-normal">원</span>
                   </div>
                 </div>
               </div>
               <ul className="flex flex-col gap-2 pt-4 border-t border-slate-100">
                 {[
-                  "상세페이지 1종 제작",
-                  "스마트스토어 · 쿠팡 · 카카오쇼핑 최적화",
-                  "무료 수정 1회 포함",
-                  "납기 5~7일"
+                  "상세페이지용 메인 배너/썸네일 1장",
+                  "이미지 보정 포함",
+                  "작업 기간: 2일",
+                  "수정 횟수: 3회",
+                  "시안 개수: 1개",
+                  "원본파일 제공 · 상업적 이용 가능"
                 ].map((feature, i) => (
                   <li key={i} className="flex items-center gap-[9px] text-[13.5px] text-slate-700">
                     <div className="w-[18px] h-[18px] rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-[10px] font-bold shrink-0">✓</div>
@@ -728,7 +730,7 @@ export default function App() {
               </ul>
             </motion.div>
 
-            {/* Standard */}
+            {/* Deluxe */}
             <motion.div 
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -741,24 +743,25 @@ export default function App() {
               <div className="flex flex-wrap md:flex-nowrap items-start justify-between mb-4 gap-2.5">
                 <div className="flex items-center">
                   <div>
-                    <div className="text-[17px] font-bold text-slate-900 mb-[3px]">스탠다드</div>
-                    <div className="text-[12px] text-slate-500">가장 많이 선택하는 플랜</div>
+                    <div className="text-[17px] font-bold text-slate-900 mb-[3px]">디럭스</div>
+                    <div className="text-[12px] text-slate-500">식품 브랜드 상세페이지 디자인</div>
                   </div>
                 </div>
                 <div className="text-left md:text-right w-full md:w-auto mt-2 md:mt-0">
                   <span className="text-[11.5px] text-slate-400 line-through block mb-[2px]">&nbsp;</span>
                   <div className="font-display font-bold text-[26px] text-indigo-600 leading-none">
-                    15<span className="text-[13px] text-slate-500 font-normal">만원~</span>
+                    55,000<span className="text-[13px] text-slate-500 font-normal">원</span>
                   </div>
                 </div>
               </div>
               <ul className="flex flex-col gap-2 pt-4 border-t border-indigo-100">
                 {[
-                  "상세페이지 1종 + 썸네일 이미지 포함",
-                  "전 플랫폼 최적화 (자사몰 포함)",
-                  "무료 수정 2회 포함",
-                  "납기 5~7일",
-                  "트렌드 분석 반영 디자인"
+                  "5000px 기준 상세페이지 1:1 맞춤",
+                  "브랜드 컨셉 반영 디자인",
+                  "작업 기간: 5일",
+                  "수정 횟수: 제한없음",
+                  "시안 개수: 1개",
+                  "원본파일 제공 · 상업적 이용 가능"
                 ].map((feature, i) => (
                   <li key={i} className="flex items-center gap-[9px] text-[13.5px] text-slate-700">
                     <div className="w-[18px] h-[18px] rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[10px] font-bold shrink-0">✓</div>
@@ -768,7 +771,7 @@ export default function App() {
               </ul>
             </motion.div>
 
-            {/* All-in-one */}
+            {/* Premium */}
             <motion.div 
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -777,29 +780,29 @@ export default function App() {
               className="bg-gradient-to-br from-white to-amber-50/50 border-[1.5px] border-amber-500 rounded-[20px] p-[26px] md:p-[28px] relative overflow-hidden transition-all hover:-translate-y-[3px] hover:shadow-[0_14px_40px_rgba(245,158,11,0.15)] group"
             >
               <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-amber-600 to-amber-400" />
-              <div className="absolute top-[14px] right-[16px] text-[11px] font-bold px-[11px] py-[4px] rounded-full tracking-[0.04em] bg-amber-500 text-white">풀패키지</div>
+              <div className="absolute top-[14px] right-[16px] text-[11px] font-bold px-[11px] py-[4px] rounded-full tracking-[0.04em] bg-amber-500 text-white">고급형</div>
               <div className="flex flex-wrap md:flex-nowrap items-start justify-between mb-4 gap-2.5">
                 <div className="flex items-center">
                   <div>
-                    <div className="text-[17px] font-bold text-slate-900 mb-[3px]">올인원 패키지</div>
-                    <div className="text-[12px] text-slate-500">초보 사장님께 꼭 필요한 것만 담았습니다</div>
+                    <div className="text-[17px] font-bold text-slate-900 mb-[3px]">프리미엄</div>
+                    <div className="text-[12px] text-slate-500">상세페이지 풀패키지 고급형 제작</div>
                   </div>
                 </div>
                 <div className="text-left md:text-right w-full md:w-auto mt-4 md:mt-0">
                   <span className="text-[11.5px] text-slate-400 line-through block mb-[2px]">&nbsp;</span>
-                  <div className="font-display font-bold text-[26px] text-amber-500 leading-none flex items-baseline gap-2 justify-start md:justify-end">
-                    <span className="text-[14px] text-slate-400 line-through font-normal">정가 55만원</span>
-                    <span>33<span className="text-[13px] text-slate-500 font-normal">만원</span></span>
+                  <div className="font-display font-bold text-[26px] text-amber-500 leading-none">
+                    99,000<span className="text-[13px] text-slate-500 font-normal">원</span>
                   </div>
                 </div>
               </div>
               <ul className="flex flex-col gap-2 pt-4 border-t border-amber-100">
                 {[
-                  "트루폼 AI 기반 전환 구조 설계",
-                  "타겟 맞춤형 카피라이팅 재정리",
-                  "고화질 이미지 보정 및 합성",
-                  "모바일 최적화 레이아웃",
-                  "무료 수정 3회 포함"
+                  "10000px 기준 고급 상세페이지",
+                  "기획 컨설팅 포함 디자인",
+                  "작업 기간: 7일",
+                  "수정 횟수: 제한없음",
+                  "시안 개수: 1개",
+                  "원본파일 제공 · 상업적 이용 가능"
                 ].map((feature, i) => (
                   <li key={i} className="flex items-center gap-[9px] text-[13.5px] text-slate-700">
                     <div className="w-[18px] h-[18px] rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-[10px] font-bold shrink-0">✓</div>
@@ -821,10 +824,11 @@ export default function App() {
             <div className="text-[13.5px] font-bold text-indigo-600 mb-[14px] flex items-center gap-[7px]">추가 옵션</div>
             <div className="flex flex-col gap-[10px]">
               {[
-                { label: "썸네일 추가 제작 (1종)", price: "+2만원~" },
-                { label: "빠른 납기 (3일 이내)", price: "+3만원~" },
-                { label: "기존 페이지 리뉴얼", price: "별도 협의" },
-                { label: "2종 이상 패키지", price: "10% 할인" }
+                { label: "빠른 작업 (스탠다드)", price: "+10,000원" },
+                { label: "빠른 작업 (디럭스)", price: "+20,000원" },
+                { label: "빠른 작업 (프리미엄)", price: "+30,000원" },
+                { label: "추가 수정 (1회)", price: "+5,000원" },
+                { label: "추가 시안 (1개)", price: "+15,000원" }
               ].map((addon, i) => (
                 <div key={i} className="flex justify-between items-center text-[13.5px]">
                   <div className="text-slate-700 flex items-center gap-[7px]">{addon.label}</div>
@@ -847,8 +851,7 @@ export default function App() {
               {[
                 "상품 정보 및 이미지는 고객님께서 제공해 주셔야 합니다",
                 "상품 카테고리·복잡도에 따라 금액이 달라질 수 있습니다",
-                "결제는 착수금 50% + 완료 후 잔금 50% 방식입니다",
-                "수정 횟수 초과 시 건당 1만원 추가됩니다"
+                "결제는 100만원 이하 상품으로 전액 지불이 완료된 후에 작업이 진행됨을 이해해주시기 바랍니다. "
               ].map((notice, i) => (
                 <li key={i} className="text-[12.5px] text-slate-500 pl-[14px] relative leading-[1.6]">
                   <span className="absolute left-0 text-indigo-500 font-bold">·</span>
